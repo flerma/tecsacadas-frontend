@@ -1,0 +1,32 @@
+<mat-card class="login-card">
+  <mat-card-header>
+    <img mat-card-avatar src="../../../logo.jpg">
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form" [formGroup]="loginForm">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+            <input matInput placeholder="Usuário" name="username" class="form-control" formControlName="username" required>
+            </mat-form-field>
+            <mat-error style="margin-top: -1.25em" *ngIf="loginForm.controls['username'].invalid && (loginForm.controls['username'].dirty || loginForm.controls['username'].touched)">Digite seu usuário!</mat-error>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Senha" type="password" name="password" class="form-control" formControlName="password" required>
+            </mat-form-field>
+            <mat-error style="margin-top: -1.25em" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">Digite sua senha!</mat-error>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button (click)="login()" color="primary">Login</button>
+  </mat-card-actions>
+</mat-card>
