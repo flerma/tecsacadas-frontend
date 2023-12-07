@@ -1,25 +1,46 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Tec Sacadas Manager</span>
+<app-header></app-header>
 
-      <button mat-button (click)="logout()">Sair</button>
-      <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
+<mat-card class="login-card">
+  <mat-card-header>
+    <mat-card-title>Relatórios</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form" [formGroup]="reportForm">
+      <table cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field>
+            <input matInput
+                   placeholder="Mês"
+                   name="month"
+                   class="form-control"
+                   formControlName="month"
+                   required>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field>
+              <input matInput
+                     placeholder="Ano"
+                     type="year"
+                     name="year"
+                     class="form-control"
+                     formControlName="year"
+                     required>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="gerar()">Gerar</button>
+  </mat-card-actions>
+</mat-card>
 
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>face</mat-icon>
-        <span>Conta</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>settings</mat-icon>
-        <span>Configurações</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>notifications</mat-icon>
-        <span>Notificações</span>
-      </button>
-    </mat-menu>
-  </mat-toolbar-row>
-</mat-toolbar>
+<app-file-upload requiredFileType="image/png"></app-file-upload>
+
+
+

@@ -15,13 +15,4 @@ export class UsersService {
   findUsers(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
   }
-
-  authenticate(username: string, password: string): boolean {
-     this.http.get<any>(this.apiUrl);
-
-     if(username == 'admin' && password == 'admin'){
-      return true;
-     }
-     return false;
-  }
 }

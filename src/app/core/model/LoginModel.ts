@@ -1,5 +1,5 @@
 export class LoginModel
 {
-  email!: string;
-  password!: string;
+  login!: string;
+  senha!: string;
 }

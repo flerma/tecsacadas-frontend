@@ -1,0 +1,45 @@
+<mat-card class="login-card">
+  <mat-card-header>
+    <mat-card-title>Upload de arquivo</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form" [formGroup]="uploadForm">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td style="vertical-align: middle;">
+            <mat-label>{{ fileName }}</mat-label>
+          </td>
+          <td style="vertical-align: middle;">
+            <button mat-mini-fab color="primary" class="upload-btn"
+                (click)="fileUpload.click()">
+                <mat-icon>attach_file</mat-icon>
+                <input id="uploadFile"
+                       type="file"
+                       style="display:none"
+                       accept=".xls,.xlsx"
+                       placeholder="Escolha o arquivo"
+                       name="uploadFile"
+                       class="form-control"
+                       formControlName="uploadFile"
+                       (change)="upload($event)"
+                       #fileUpload>
+            </button>
+
+          </td>
+        </tr>
+      </table>
+    </form>
+  </mat-card-content>
+</mat-card>
+<div class="progress">
+
+  <mat-progress-bar class="progress-bar" mode="determinate"
+                    [value]="uploadProgress" *ngIf="uploadProgress">
+
+  </mat-progress-bar>
+
+  <div *ngIf="isSingleUploaded" class="success">
+    File uploaded successfully with Url: <b>{{urlAfterUpload}}</b>
+  </div>
+
+</div>

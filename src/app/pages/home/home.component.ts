@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,11 +9,22 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private fb: FormBuilder) {
+      this.createForm();
+  }
 
-  logout(): void {
-    localStorage.removeItem("username");
-    localStorage.removeItem("token");
-    this.router.navigate(["login"]);
+  reportForm!: FormGroup;
+
+  createForm() {
+    this.reportForm = this.fb.group({
+      month: ['', Validators.required],
+      year: ['', Validators.required]
+    });
+  }
+
+  gerar() {
+    console.log(this.reportForm.controls['month'].value);
+    console.log(this.reportForm.controls['year'].value);
   }
 }
