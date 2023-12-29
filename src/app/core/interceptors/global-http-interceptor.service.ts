@@ -33,6 +33,8 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
               case 403:     //forbidden
                   this.router.navigateByUrl("/unauthorized");
                   break;
+              case 400:     //forbidden
+                return throwError(() => error.error);
               case 0:     //Unknown Error
                 return throwError(() => "Serviço fora do ar!");
           }

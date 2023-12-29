@@ -11,6 +11,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -26,7 +32,13 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSnackBarModule,
+    FlexLayoutModule,
+    MatSidenavModule,
+    MatListModule,
+    MatExpansionModule,
+    RouterModule,
   ],
   exports: [
     CommonModule,
@@ -39,7 +51,13 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
      MatMenuModule,
      MatIconModule,
      MatProgressSpinnerModule,
-     MatProgressBarModule
+     MatProgressBarModule,
+     MatSnackBarModule,
+     FlexLayoutModule,
+     MatSidenavModule,
+     MatListModule,
+     MatExpansionModule,
+     RouterModule,
      ]
 })
 export class CustomMaterialModule { }

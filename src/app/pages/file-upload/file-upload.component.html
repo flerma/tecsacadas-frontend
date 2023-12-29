@@ -7,8 +7,10 @@
       <table class="example-full-width" cellspacing="0">
         <tr>
           <td style="vertical-align: middle;">
-            <mat-label>{{ fileName }}</mat-label>
+            <mat-label>Selecione o arquivo de acompanhamento de leads</mat-label>
           </td>
+        </tr>
+        <tr>
           <td style="vertical-align: middle;">
             <button mat-mini-fab color="primary" class="upload-btn"
                 (click)="fileUpload.click()">
@@ -24,7 +26,14 @@
                        (change)="upload($event)"
                        #fileUpload>
             </button>
-
+          </td>
+          <td style="vertical-align: middle;">
+            <mat-label>{{ fileName }}</mat-label>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: middle;">
+            <mat-error class="mat-error" style="margin-top: -1.25em" *ngIf="uploadHasError"><p>{{ uploadError }}</p></mat-error>
           </td>
         </tr>
       </table>
@@ -37,9 +46,3 @@
                     [value]="uploadProgress" *ngIf="uploadProgress">
 
   </mat-progress-bar>
-
-  <div *ngIf="isSingleUploaded" class="success">
-    File uploaded successfully with Url: <b>{{urlAfterUpload}}</b>
-  </div>
-
-</div>

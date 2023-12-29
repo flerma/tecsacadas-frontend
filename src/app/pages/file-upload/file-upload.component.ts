@@ -2,6 +2,7 @@ import { HttpClient, HttpEventType, HttpHeaders, HttpResponse } from '@angular/c
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Observable, Subscription, catchError, throwError } from 'rxjs';
+import { MatSnackBar, MatSnackBarAction, MatSnackBarActions, MatSnackBarLabel, MatSnackBarRef } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-file-upload',
@@ -10,12 +11,14 @@ import { Observable, Subscription, catchError, throwError } from 'rxjs';
 })
 export class FileUploadComponent {
 
+  durationInSeconds = 5;
   percentCompleted: number = 0;
   isMultipleUploaded = false;
   isSingleUploaded = false;
-  urlAfterUpload = '';
   percentUploaded = [0];
   acceptedExtensions = "jpg, jpeg, bmp, png, wav, mp3, mp4";
+  uploadHasError = false;
+  uploadError = '';
 
   @Input()
   requiredFileType!:string;
@@ -25,7 +28,8 @@ export class FileUploadComponent {
   uploadSub!: Subscription;
 
   constructor(private formBuilder: FormBuilder,
-              private http: HttpClient) {}
+              private http: HttpClient,
+              private snackBar: MatSnackBar) {}
 
   reportForm!: FormGroup;
 
@@ -33,10 +37,25 @@ export class FileUploadComponent {
     uploadFile: this.formBuilder.control('', [Validators.required, this.fileExtensionValidator(this.acceptedExtensions)])
   });
 
+  openSuccessSnackBar() {
+    this.snackBar.open("Upload efetuado com sucesso.", "OK", {
+      duration: this.durationInSeconds * 1000,
+      verticalPosition: 'top',
+      panelClass: ['mat-toolbar', 'mat-primary'],
+    });
+  }
+
+  openFailureSnackBar(){
+    this.snackBar.open("Ocorreu um erro no upload.", "Tente novamente!", {
+      duration: this.durationInSeconds * 1000,
+      verticalPosition: 'top',
+      panelClass: ['red-snackbar'],
+    });
+  }
+
   upload(event: Event) {
 
     this.isSingleUploaded = false;
-    this.urlAfterUpload = '';
 
     const formData = new FormData();
     const input = event.target as HTMLInputElement;
@@ -59,20 +78,19 @@ export class FileUploadComponent {
           this.uploadProgress = Math.round(100 * event.loaded / event.total);
         } else if (event instanceof HttpResponse) {
           this.isSingleUploaded = true;
-          this.urlAfterUpload = event.body.link;
+          this.openSuccessSnackBar();
         }
       });
   }
 
   uploadWithProgress(formData: FormData): Observable<any> {
 
-    let headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': 'http://localhost:4200'
-    });
-
-    return this.http.post("http://localhost:8081/api/acompanhamento-leads/upload", formData, { observe: 'events',  reportProgress: true, headers: headers })
+    return this.http.post("http://localhost:8081/acompanhamento-leads/upload", formData, { observe: 'events',  reportProgress: true })
       .pipe(
         catchError((error) => {
+          this.uploadError = error;
+          this.uploadHasError = true;
+          this.openFailureSnackBar();
           return throwError(() => error);
         })
       );
