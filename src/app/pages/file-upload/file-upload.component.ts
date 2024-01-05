@@ -85,7 +85,7 @@ export class FileUploadComponent {
 
   uploadWithProgress(formData: FormData): Observable<any> {
 
-    return this.http.post("http://localhost:8081/acompanhamento-leads/upload", formData, { observe: 'events',  reportProgress: true })
+    return this.http.post("https://ferna3326.c35.integrator.host/acompanhamento-leads/upload", formData, { observe: 'events',  reportProgress: true })
       .pipe(
         catchError((error) => {
           this.uploadError = error;

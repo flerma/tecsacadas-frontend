@@ -17,6 +17,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -39,6 +41,9 @@ import { RouterModule } from '@angular/router';
     MatListModule,
     MatExpansionModule,
     RouterModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatCheckboxModule
   ],
   exports: [
     CommonModule,
@@ -58,6 +63,9 @@ import { RouterModule } from '@angular/router';
      MatListModule,
      MatExpansionModule,
      RouterModule,
+     MatTableModule,
+     MatPaginatorModule,
+     MatCheckboxModule
      ]
 })
 export class CustomMaterialModule { }
