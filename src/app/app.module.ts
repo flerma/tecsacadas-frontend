@@ -13,6 +13,7 @@ import { GlobalHttpInterceptorService } from './core/interceptors/global-http-in
 import { FileUploadComponent } from './pages/file-upload/file-upload.component';
 import { LeadsReportsComponent } from './pages/leads-reports/leads-reports.component';
 import { RouterModule } from '@angular/router';
+import { LeadsReportsService } from './pages/leads-reports/leads-reports.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { RouterModule } from '@angular/router';
     HomeComponent,
     MenuComponent,
     FileUploadComponent,
-    LeadsReportsComponent
+    LeadsReportsComponent,
   ],
   imports: [
     CommonModule,
@@ -28,10 +29,10 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    CustomMaterialModule,
+    CustomMaterialModule
   ],
   providers: [
-    UsersService, LoginService,
+    UsersService, LoginService, LeadsReportsService,
     {provide: HTTP_INTERCEPTORS,    useClass: GlobalHttpInterceptorService,    multi: true}
   ],
   bootstrap: [AppComponent]

@@ -9,7 +9,10 @@
         <tr>
           <td>
             <mat-form-field>
-            <input matInput
+            <input type="number"
+                   min="1"
+                   max="12"
+                   matInput
                    placeholder="Mês"
                    name="month"
                    class="form-control"
@@ -21,7 +24,9 @@
             <mat-form-field>
               <input matInput
                      placeholder="Ano"
-                     type="year"
+                     type="number"
+                     min="2023"
+                     max="2100"
                      name="year"
                      class="form-control"
                      formControlName="year"
@@ -30,7 +35,7 @@
           </td>
           <td>
             <mat-card-actions>
-              <button mat-raised-button color="primary" (click)="gerar()">Gerar</button>
+              <button mat-raised-button color="primary" (click)="generate()">Gerar</button>
             </mat-card-actions>
           </td>
         </tr>
@@ -42,14 +47,19 @@
     </mat-form-field>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-      <ng-container matColumnDef="number">
+      <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.number}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Nome </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="source">
+        <th mat-header-cell *matHeaderCellDef> Fonte </th>
+        <td mat-cell *matCellDef="let element"> {{element.source}} </td>
       </ng-container>
 
       <ng-container matColumnDef="checkbox">

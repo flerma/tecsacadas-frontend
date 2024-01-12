@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Observable, Subscription, catchError, throwError } from 'rxjs';
 import { MatSnackBar, MatSnackBarAction, MatSnackBarActions, MatSnackBarLabel, MatSnackBarRef } from '@angular/material/snack-bar';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-file-upload',
@@ -10,6 +11,8 @@ import { MatSnackBar, MatSnackBarAction, MatSnackBarActions, MatSnackBarLabel, M
   styleUrl: './file-upload.component.css'
 })
 export class FileUploadComponent {
+
+  private readonly apiUrl = environment.urlApi;
 
   durationInSeconds = 5;
   percentCompleted: number = 0;
@@ -85,7 +88,7 @@ export class FileUploadComponent {
 
   uploadWithProgress(formData: FormData): Observable<any> {
 
-    return this.http.post("https://ferna3326.c35.integrator.host/acompanhamento-leads/upload", formData, { observe: 'events',  reportProgress: true })
+    return this.http.post(this.apiUrl + "/acompanhamento-leads/upload", formData, { observe: 'events',  reportProgress: true })
       .pipe(
         catchError((error) => {
           this.uploadError = error;
