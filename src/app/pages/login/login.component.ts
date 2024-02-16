@@ -35,11 +35,11 @@ export class LoginComponent {
 
     let loginModel = new LoginModel();
     loginModel.login = this.loginForm.controls['username'].value;
-    loginModel.senha = this.loginForm.controls['password'].value;
+    loginModel.password = this.loginForm.controls['password'].value;
 
     this.loginService.authenticate(loginModel).subscribe({
-      next: (isLoggedIn) => {
-        if (isLoggedIn) {
+      next: (response) => {
+        if (response != null) {
           this.router.navigate(["home"]);
           this.showSpinner = false;
         } else {

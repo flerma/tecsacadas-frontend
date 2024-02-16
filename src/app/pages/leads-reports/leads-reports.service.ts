@@ -23,8 +23,14 @@ export class LeadsReportsService {
     return throwError(() => error);
   }
 
-  generateReports(month: number, year: number, reportList: string[]): Observable<Blob[]> {
-    return this.http.get<Blob[]>(this.apiUrl+'/report/generate' + '?' + reportList).pipe(
+  generateSelectedReports(month: number, year: number, reportList: string[]): Observable<Blob[]> {
+    return this.http.get<Blob[]>(this.apiUrl+'/report/generate' + '?report=' + reportList + '&year=' + year + '&month=' + month).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  generateSelectedReport(month: number, year: number, report: string): Observable<Blob> {
+    return this.http.get<Blob>(this.apiUrl+'/report/generate' + '?' + report + '&year=' + year + '&month=' + month).pipe(
       catchError(this.handleError)
     );
   }

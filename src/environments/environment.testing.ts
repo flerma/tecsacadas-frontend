@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
+  production: false,
   urlApi: 'https://ferna3326.c35.integrator.host'
 };

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -10,6 +9,10 @@ import { RouterOutlet } from '@angular/router';
 export class MenuComponent {
 
   constructor(private router: Router) {}
+
+  takeItToHome() {
+    this.router.navigate(["home"]);
+  }
 
   logout(): void {
     localStorage.removeItem("username");

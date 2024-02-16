@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoginModel } from '../../core/model/LoginModel';
+import { LoginResponse } from './LoginResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,9 @@ export class LoginService {
 
   private readonly apiUrl = environment.urlApi;
 
-  authenticate(login: LoginModel): Observable<boolean> {
-    return this.http.post<Boolean>(this.apiUrl+'/login/autenticar', login).pipe(
-      map(response  => {
-        return typeof response === 'boolean' ? response : false;
-      }),
+  authenticate(login: LoginModel): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.apiUrl+'/login/authenticate', login).pipe(
+      map(response  => response),
       catchError(this.handleError)
     );
   }

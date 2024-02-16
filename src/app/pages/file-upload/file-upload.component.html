@@ -1,48 +1,42 @@
-<mat-card class="login-card">
+<mat-card style="width: auto;">
   <mat-card-header>
     <mat-card-title>Upload de arquivo</mat-card-title>
   </mat-card-header>
-  <mat-card-content>
-    <form class="example-form" [formGroup]="uploadForm">
-      <table class="example-full-width" cellspacing="0">
-        <tr>
-          <td style="vertical-align: middle;">
-            <mat-label>Selecione o arquivo de acompanhamento de leads</mat-label>
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align: middle;">
-            <button mat-mini-fab color="primary" class="upload-btn"
-                (click)="fileUpload.click()">
-                <mat-icon>attach_file</mat-icon>
-                <input id="uploadFile"
-                       type="file"
-                       style="display:none"
-                       accept=".xls,.xlsx"
-                       placeholder="Escolha o arquivo"
-                       name="uploadFile"
-                       class="form-control"
-                       formControlName="uploadFile"
-                       (change)="upload($event)"
-                       #fileUpload>
-            </button>
-          </td>
-          <td style="vertical-align: middle;">
-            <mat-label>{{ fileName }}</mat-label>
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align: middle;">
-            <mat-error class="mat-error" style="margin-top: -1.25em" *ngIf="uploadHasError"><p>{{ uploadError }}</p></mat-error>
-          </td>
-        </tr>
-      </table>
-    </form>
+  <mat-card-content style="width: 100%;">
+    <div fxLayout="row wrap" fxLayoutAlign="left" style="margin-top:20px">
+      <form class="example-form" [formGroup]="uploadForm">
+        <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+            <mat-label style="margin: auto;">Selecione o arquivo de acompanhamento de leads</mat-label>
+            <button mat-mini-fab
+                    style="margin-left: 20px;"
+                    color="primary"
+                    (click)="fileUpload.click()">
+                    <mat-icon>attach_file</mat-icon>
+                    <input id="uploadFile"
+                          type="file"
+                          style="display:none"
+                          accept=".xls,.xlsx"
+                          placeholder="Escolha o arquivo"
+                          name="uploadFile"
+                          class="form-control"
+                          formControlName="uploadFile"
+                          (change)="upload($event)"
+                          #fileUpload>
+              </button>
+        </div>
+        <div fxLayout.gt-sm="row" fxLayout.lt-md="column" style="margin-top: 10px;">
+              <mat-label>{{ fileName }}</mat-label>
+        </div>
+            <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+              <mat-progress-bar class="progress-bar"
+                                mode="determinate"
+                                [value]="uploadProgress"
+                                *ngIf="uploadProgress">
+              </mat-progress-bar>
+              <mat-error class="mat-error" style="margin-top: -1.25em" *ngIf="uploadHasError"><p>{{ uploadError }}</p></mat-error>
+        </div>
+      </form>
+    </div>
   </mat-card-content>
 </mat-card>
 <div class="progress">
-
-  <mat-progress-bar class="progress-bar" mode="determinate"
-                    [value]="uploadProgress" *ngIf="uploadProgress">
-
-  </mat-progress-bar>

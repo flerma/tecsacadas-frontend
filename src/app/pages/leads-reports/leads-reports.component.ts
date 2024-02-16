@@ -31,7 +31,7 @@ export class LeadsReportsComponent {
 
   selection = new SelectionModel<LeadReportModel>(true, []);
   dataSource: MatTableDataSource<LeadReportModel>;
-  displayedColumns: string[] = ['id', 'name', 'source', 'checkbox'];
+  displayedColumns: string[] = ['checkbox', 'id', 'name', 'source'];
   reportForm!: FormGroup;
 
   checked = [];
@@ -47,7 +47,7 @@ export class LeadsReportsComponent {
   createForm() {
     this.reportForm = this.fb.group({
       month: ['', Validators.required],
-      year: ['', Validators.required]
+      year: ['', Validators.required, [Validators.min(2023), Validators.min(2100)]]
     });
   }
 
@@ -72,7 +72,7 @@ export class LeadsReportsComponent {
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  generate() {
+  generateSelected() {
 
     if (this.reportForm.invalid) {
       return;
@@ -86,9 +86,43 @@ export class LeadsReportsComponent {
       }
     });
 
-    this.leadsReportsService.generateReports(this.reportForm.controls['month'].value,
+    this.leadsReportsService.generateSelectedReports(this.reportForm.controls['month'].value,
                                              this.reportForm.controls['year'].value,
                                              reportList).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  formInvalid() {
+    const invalid = [];
+    const controls = this.reportForm.controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+        }
+    }
+    return invalid.length > 0;
+  }
+
+  generateOne() {
+
+    let reportIdentifier: string = '';
+
+    this.dataSource.data.forEach(row => {
+      if (this.selection.isSelected(row)) {
+        reportIdentifier = row.identifier;
+      }
+    });
+
+    this.leadsReportsService.generateSelectedReport(this.reportForm.controls['month'].value,
+                                                    this.reportForm.controls['year'].value,
+                                                    reportIdentifier)
+                                                    .subscribe({
       next: (data) => {
         console.log(data);
       },

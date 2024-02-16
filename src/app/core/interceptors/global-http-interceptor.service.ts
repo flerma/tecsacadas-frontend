@@ -17,7 +17,7 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error) => {
-        let errorMessage = error.message;
+        let errorMessage = error.error;
 
         if (error.error instanceof ErrorEvent) {
           errorMessage = `Erro: ${error.error.message}`;

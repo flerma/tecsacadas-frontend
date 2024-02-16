@@ -1,86 +1,79 @@
 <app-file-upload requiredFileType="image/png"></app-file-upload>
-<mat-card>
+<mat-card style="width: auto;">
   <mat-card-header>
     <mat-card-title>Relatórios</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form class="example-form" [formGroup]="reportForm">
-      <table cellspacing="0">
-        <tr>
-          <td>
-            <mat-form-field>
+    <div fxLayout="row wrap" fxLayoutAlign="left" style="margin-top:20px">
+      <form [formGroup]="reportForm">
+        <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+          <mat-form-field style="margin-right: 20px;">
             <input type="number"
-                   min="1"
-                   max="12"
-                   matInput
-                   placeholder="Mês"
-                   name="month"
-                   class="form-control"
-                   formControlName="month"
-                   required>
-            </mat-form-field>
+                  min="1"
+                  max="12"
+                  matInput
+                  placeholder="Mês"
+                  name="month"
+                  class="form-control"
+                  formControlName="month"
+                  required>
+          </mat-form-field>
+          <mat-form-field style="margin-right: 20px;">
+            <input matInput
+                  placeholder="Ano"
+                  type="number"
+                  min="2023"
+                  max="2100"
+                  name="year"
+                  class="form-control"
+                  formControlName="year"
+                  required>
+          </mat-form-field>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="generateOne()" [disabled]="formInvalid()">Gerar</button>
+          </mat-card-actions>
+        </div>
+      </form>
+      <mat-form-field style="width: 100%;">
+        <mat-label>Filtro</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Conver..." #input>
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="checkbox">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(element) : null"
+                      [checked]="selection.isSelected(element)">
+            </mat-checkbox>
           </td>
-          <td>
-            <mat-form-field>
-              <input matInput
-                     placeholder="Ano"
-                     type="number"
-                     min="2023"
-                     max="2100"
-                     name="year"
-                     class="form-control"
-                     formControlName="year"
-                     required>
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-card-actions>
-              <button mat-raised-button color="primary" (click)="generate()">Gerar</button>
-            </mat-card-actions>
-          </td>
-        </tr>
+        </ng-container>
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="source">
+          <th mat-header-cell *matHeaderCellDef> Fonte </th>
+          <td mat-cell *matCellDef="let element"> {{element.source}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-    </form>
-    <mat-form-field style="width: 100%;">
-      <mat-label>Filtro</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Conver..." #input>
-    </mat-form-field>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Nome </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="source">
-        <th mat-header-cell *matHeaderCellDef> Fonte </th>
-        <td mat-cell *matCellDef="let element"> {{element.source}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="checkbox">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null"
-                    [checked]="selection.hasValue() && isAllSelected()"
-                    [indeterminate]="selection.hasValue() && !isAllSelected()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let element">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                    (change)="$event ? selection.toggle(element) : null"
-                    [checked]="selection.isSelected(element)">
-          </mat-checkbox>
-        </td>
-      </ng-container>
-
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <mat-paginator [pageSizeOptions]="[5, 10]" aria-label="Select page of leads"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10]" aria-label="Select page of leads"></mat-paginator>
+    </div>
   </mat-card-content>
 </mat-card>
