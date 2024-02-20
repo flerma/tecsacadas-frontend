@@ -23,7 +23,7 @@ export class LeadsReportsService {
     return throwError(() => error);
   }
 
-  generateSelectedReports(month: number, year: number, reportList: string[]): Observable<Blob[]> {
+  generateSelectedReports(month: number, year: number, reportList: LeadReportModel[]): Observable<Blob[]> {
     return this.http.get<Blob[]>(this.apiUrl+'/report/generate' + '?report=' + reportList + '&year=' + year + '&month=' + month).pipe(
       catchError(this.handleError)
     );

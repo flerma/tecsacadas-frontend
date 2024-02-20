@@ -30,7 +30,7 @@
                   required>
           </mat-form-field>
           <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="generateOne()" [disabled]="formInvalid()">Gerar</button>
+            <button mat-raised-button color="primary" (click)="generateSelected()" [disabled]="formInvalid()">Gerar</button>
           </mat-card-actions>
         </div>
       </form>
@@ -52,6 +52,15 @@
                       (change)="$event ? selection.toggle(element) : null"
                       [checked]="selection.isSelected(element)">
             </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="download">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="generateOne(element)">
+              <mat-icon>download</mat-icon>
+            </button>
           </td>
         </ng-container>
 

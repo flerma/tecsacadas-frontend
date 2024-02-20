@@ -32,7 +32,7 @@ export class LeadsReportsComponent {
 
   selection = new SelectionModel<LeadReportModel>(true, []);
   dataSource: MatTableDataSource<LeadReportModel>;
-  displayedColumns: string[] = ['checkbox', 'id', 'name', 'source'];
+  displayedColumns: string[] = ['checkbox', 'download', 'id', 'name', 'source'];
   reportForm!: FormGroup;
 
   checked = [];
@@ -75,26 +75,16 @@ export class LeadsReportsComponent {
 
   generateSelected() {
 
-    if (this.reportForm.invalid) {
+    let month = this.reportForm.controls['month'].value;
+    let year = this.reportForm.controls['year'].value;
+
+    if (month.length === 0 || year.length === 0) {
       return;
     }
 
-    let reportList: string[] = [];
-
     this.dataSource.data.forEach(row => {
-      if (this.selection.isSelected(row)) {
-        reportList.push(row.identifier);
-      }
-    });
-
-    this.leadsReportsService.generateSelectedReports(this.reportForm.controls['month'].value,
-                                             this.reportForm.controls['year'].value,
-                                             reportList).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: (error) => {
-        console.error(error);
+    if (this.selection.isSelected(row)) {
+        this.generateOne(row);
       }
     });
   }
@@ -110,19 +100,21 @@ export class LeadsReportsComponent {
     return invalid.length > 0;
   }
 
-  generateOne() {
+  generateOne(row: LeadReportModel) {
 
-    let reportIdentifier: string = '';
-    let reportName: string = '';
     let month = this.reportForm.controls['month'].value;
     let year = this.reportForm.controls['year'].value;
 
-    this.dataSource.data.forEach(row => {
-      if (this.selection.isSelected(row)) {
-        reportIdentifier = row.identifier;
-        reportName = row.reportName.replace('[YEAR]', year).replace('[MONTH]', month);
-      }
-    });
+    if (month.length === 0 || year.length === 0) {
+      return;
+    }
+
+    let reportIdentifier: string = '';
+    let reportName: string = '';
+
+
+    reportName = row.reportName.replace('[YEAR]', year).replace('[MONTH]', month);
+    reportIdentifier = row.identifier;
 
     this.leadsReportsService.generateSelectedReport(month,
                                                     year,
