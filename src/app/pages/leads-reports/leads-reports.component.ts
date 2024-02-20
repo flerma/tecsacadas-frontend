@@ -75,10 +75,7 @@ export class LeadsReportsComponent {
 
   generateSelected() {
 
-    let month = this.reportForm.controls['month'].value;
-    let year = this.reportForm.controls['year'].value;
-
-    if (month.length === 0 || year.length === 0) {
+    if (this.formInvalid()) {
       return;
     }
 
@@ -102,16 +99,14 @@ export class LeadsReportsComponent {
 
   generateOne(row: LeadReportModel) {
 
-    let month = this.reportForm.controls['month'].value;
-    let year = this.reportForm.controls['year'].value;
-
-    if (month.length === 0 || year.length === 0) {
+    if (this.formInvalid()) {
       return;
     }
 
     let reportIdentifier: string = '';
     let reportName: string = '';
-
+    let month = this.reportForm.controls['month'].value;
+    let year = this.reportForm.controls['year'].value;
 
     reportName = row.reportName.replace('[YEAR]', year).replace('[MONTH]', month);
     reportIdentifier = row.identifier;
