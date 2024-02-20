@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { LeadReportModel } from '../../core/model/LeadReportModel';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-leads-reports',
@@ -112,23 +113,29 @@ export class LeadsReportsComponent {
   generateOne() {
 
     let reportIdentifier: string = '';
+    let reportName: string = '';
+    let month = this.reportForm.controls['month'].value;
+    let year = this.reportForm.controls['year'].value;
 
     this.dataSource.data.forEach(row => {
       if (this.selection.isSelected(row)) {
         reportIdentifier = row.identifier;
+        reportName = row.reportName.replace('[YEAR]', year).replace('[MONTH]', month);
       }
     });
 
-    this.leadsReportsService.generateSelectedReport(this.reportForm.controls['month'].value,
-                                                    this.reportForm.controls['year'].value,
+    this.leadsReportsService.generateSelectedReport(month,
+                                                    year,
                                                     reportIdentifier)
-                                                    .subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: (error) => {
-        console.error(error);
-      }
+    .subscribe((response: Blob) => {
+      const url = window.URL.createObjectURL(response);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = reportName;
+      link.click();
+
+      window.URL.revokeObjectURL(url);
     });
   }
 

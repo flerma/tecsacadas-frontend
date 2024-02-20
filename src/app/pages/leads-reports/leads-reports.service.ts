@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -29,9 +29,7 @@ export class LeadsReportsService {
     );
   }
 
-  generateSelectedReport(month: number, year: number, report: string): Observable<Blob> {
-    return this.http.get<Blob>(this.apiUrl+'/report/generate' + '?' + report + '&year=' + year + '&month=' + month).pipe(
-      catchError(this.handleError)
-    );
+  generateSelectedReport(month: number, year: number, reportIdentifier: string): Observable<Blob> {
+    return this.http.get(this.apiUrl+'/report/download' + '?identifier=' + reportIdentifier + '&year=' + year + '&month=' + month, { responseType: 'blob' });
   }
 }

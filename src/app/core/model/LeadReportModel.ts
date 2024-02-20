@@ -4,4 +4,5 @@ export class LeadReportModel
   source!: string;
   name!: string;
   identifier!: string;
+  reportName!: string;
 }
